@@ -1,23 +1,22 @@
-# fpcashflow
-Solución Financiera para la Empresa Five Pack Alliance.
+# UNvesting: Quant Stratarb
+This project is intended to develop a quantitative trading strategy based on statistical arbitrage.
 
 ## How to run
-### 1. Instalar requerimientos con sus versiones respectivas
+### 1. Install requirements
 `pip install --upgrade pip
 pip install -r requirements.txt`
 De esta forma tendrán instalado lo necesario.
 
-### 2. Crear un archivo `.env`
-Copia las pautas de `.env.example` en el `.env` y añade los datos respectivos.
-
-### Cambiar requerimientos
-`pip list --format=freeze > requirements.txt`
+### Willing to add a new lib to the project?
+1. You need to have installed the initial requirements (IMPORTANT).
+2. Install the lib on your pc `pip install xxx`
+3. `pip list --format=freeze > requirements.txt`
 
 ### Correr la app
 `python main.py`
 
-## IMPORTANTES
-### Explicaciones
-- `utils/auth0.py` contiene funciones relacionadas al flujo de autenticación.
-- `utils/store.py` contiene los dataframes de los datos que vamos a usar.
-- `utils/env.py` contiene la configuración de las variables de entorno.
+## File explanation.
+- `config/config.py` contains global variables and constants.
+- `mt5exec.py` contains the `MT5Executor`, a class that runs given strategies on MT5.
+- `strategy.py` contains the developed strategy.
+- `test.ipynb` is a notebook for strategy testing.
