@@ -6,8 +6,7 @@ from statsmodels.tools.tools import add_constant
 from statsmodels.tsa.stattools import adfuller
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
-import MetaTrader5 as mt5
-
+from strategies.strategy import Strategy
 @dataclass
 class CointegrationResult:
     sym1: str
@@ -19,36 +18,28 @@ class CointegrationResult:
     std: float = 0.0
     zscore: Optional[pd.Series] = None
 
-class PairTradingStrategy:
-    _v: float = 1.1
+class PairTradingStrategy(Strategy):
+    _v = '1.0.1'
     def __init__(self, tickers: List[str], n_candles: int = 1000, lot_size: float = 0.1):
         self.tickers = tickers
         self.n_candles = n_candles
         self.lot_size = lot_size
-        self.symbol_data: Dict[str, pd.Series] = {}
+        self.symbol_data: Dict[str, pd.DataFrame] = {}
         self.cointegrated_pairs: List[CointegrationResult] = []
     
-    def fetch_data(self) -> None:
+    def fetch_data(self, executor) -> None:
         """Fetch price data for all tickers"""
-        for symbol in self.tickers:
-            print("Importing", symbol)
-            mt5.symbol_select(symbol, True)
-            rates = mt5.copy_rates_from_pos(symbol, mt5.TIMEFRAME_D1, 0, self.n_candles)
-            if rates is not None and len(rates) > 0:
-                df = pd.DataFrame(rates)
-                df['time'] = pd.to_datetime(df['time'], unit='s')
-                df.set_index('time', inplace=True)
-                self.symbol_data[symbol] = df['close']
-            else:
-                print(f"⚠️ Could not get data for {symbol}")
-    
+        self.symbol_data = executor.fetch_data(self.tickers, self.n_candles)
+
     def test_cointegration(self, sym1: str, sym2: str) -> Optional[CointegrationResult]:
         """Test for cointegration between two symbols"""
         s1 = self.symbol_data.get(sym1)
         s2 = self.symbol_data.get(sym2)
-        
+
         if s1 is None or s2 is None:
             return None
+        s1 = s1['close']
+        s2 = s2['close']
             
         df_pair = pd.concat([s1, s2], axis=1, join='inner').dropna()
         df_pair.columns = ['y', 'x']
@@ -92,6 +83,7 @@ class PairTradingStrategy:
     def get_trading_signals(self) -> List[Tuple[CointegrationResult, int]]:
         """Get trading signals based on current z-score"""
         signals = []
+        self.find_cointegrated_pairs()
         for pair in self.cointegrated_pairs:
             current_z = pair.zscore.iloc[-1]
             if 2 <= abs(current_z) < 3:

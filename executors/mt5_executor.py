@@ -6,18 +6,36 @@ from dataclasses import dataclass
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.stattools import coint
 import time
-from strategy import PairTradingStrategy, CointegrationResult
+from strategies.pair_trading_strategy import PairTradingStrategy, CointegrationResult
+from executors.executor import Executor
 
-class MT5Executor:
+class MT5Executor(Executor):
+
     def __init__(self, strategies: List[PairTradingStrategy]):
         self.strategies = strategies
-        self.initialize_mt5()
+        self.initialize()
     
-    def initialize_mt5(self) -> None:
+    def initialize(self) -> None:
         """Initialize MT5 connection"""
         if not mt5.initialize():
             print("MT5 initialization failed:", mt5.last_error())
             quit()
+    
+    def fetch_data(self, symbols: List[str], n_candles: int) -> Dict[str, pd.DataFrame]:
+        """Fetch symbol data from MT5"""
+        symbol_data = {}
+        for symbol in symbols:
+            print("Importing", symbol)
+            mt5.symbol_select(symbol, True)
+            rates = mt5.copy_rates_from_pos(symbol, mt5.TIMEFRAME_D1, 0, n_candles)
+            if rates is not None and len(rates) > 0:
+                df = pd.DataFrame(rates)
+                df['time'] = pd.to_datetime(df['time'], unit='s')
+                df.set_index('time', inplace=True)
+                symbol_data[symbol] = df
+            else:
+                print(f"⚠️ Could not get data for {symbol}")
+        return symbol_data
     
     def shutdown(self) -> None:
         """Shutdown MT5 connection"""
@@ -115,8 +133,7 @@ class MT5Executor:
     def run_strategies(self) -> None:
         """Run all strategies and execute trades"""
         for strategy in self.strategies:
-            strategy.fetch_data()
-            strategy.find_cointegrated_pairs()
+            strategy.fetch_data(self)
             signals = strategy.get_trading_signals()
             
             for pair, direction in signals:

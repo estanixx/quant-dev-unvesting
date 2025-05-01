@@ -16,7 +16,13 @@ De esta forma tendrán instalado lo necesario.
 `python main.py`
 
 ## File explanation.
+### Configuration
 - `config/config.py` contains global variables and constants.
-- `mt5exec.py` contains the `MT5Executor`, a class that runs given strategies on MT5.
-- `strategy.py` contains the developed strategy.
 - `test.ipynb` is a notebook for strategy testing.
+### Executors
+This class is responsible of performing broker-related actions, such as fetching data and executing purchase/selling operations. In this case we have:
+- `executors/executor.py` contains the `Executor`, an abstract class that contains the methods and properties required for an executor.
+- `executors/mt5_executor.py` contains the `MT5Executor`, a class that runs given strategies on MT5.
+### Strategies
+- `strategies/strategy.py` contains a guideline strategy.
+- `strategies/pair_trading_strategy.py` contains the developed strategy.
