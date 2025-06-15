@@ -1,2 +1,3 @@
 from .sharpe import SharpeRatio
-__all__ = ['SharpeRatio']
+from .adjusted_risk_free_rate import AdjustedRiskFreeRate
+__all__ = ['SharpeRatio', 'AdjustedRiskFreeRate']
