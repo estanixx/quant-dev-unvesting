@@ -1,5 +1,5 @@
-# UNvesting: Quant Stratarb
-This project is intended to develop a quantitative trading strategy based on statistical arbitrage.
+# UNvesting: Quant Development
+
 
 ## How to run
 ### 1. Install requirements

@@ -1,5 +1,5 @@
 # === CONFIGURACIÓN ===
-TICKERS = [
+MT5_TICKERS = [
     "GLEN_CFD.UK", "DTE_CFD.DE", "ORA_CFD.FR", "TEF_CFD.ES", "VOD_CFD.UK",
     "BMW_CFD.DE", "MBG_CFD.DE", "RNO_CFD.FR", "VOW_CFD.DE", "ML_CFD.FR",
     "ADS_CFD.DE", "PUM_CFD.DE", "GAW_CFD.UK", "MC_CFD.FR", "BTRW_CFD.UK",
@@ -24,5 +24,26 @@ TICKERS = [
     "USOIL.sml", "WHEAT", "AAPL_CFD.US", "AMZN_CFD.US", "BABA_CFD.US",
     "DIS_CFD.US", "F_CFD.US", "GE_CFD.US", "GOOGL_CFD.US", "META_CFD.US"
 ]
-N_CANDLES = 1000
-LOT = 0.1
+
+YFINANCE_TICKERS = [
+    "GLEN.L", "DTE.DE", "ORA.PA", "TEF.MC", "VOD.L", "BMW.DE", "MBG.DE", "RNO.PA", 
+    "VOW.DE", "ML.PA", "ADS.DE", "PUM.DE", "GAW.L", "MC.PA", "BTRW.L", "HEIA.AS", 
+    "KWS.DE", "TSCO.L", "OR.PA", "BATS.L", "BP.L", "ZC=F", "INDU_A.ST", "LGEN.L", 
+    "BAYN.DE", "BARC.L", "BBVA.MC", "CBK.DE", "DANSKE.CO", "LLOY.L", "NDA.CO", 
+    "SEBa.ST", "PHIA.AS", "AIR.DE", "RR.L", "AF.PA", "BBY.L", "MAERSKa.CO", "COL.MC", 
+    "NOKIA.HE", "SAP.DE", "IBE.MC", "SI=F", "GC=F", "AUDCAD=X", "AUDCHF=X", 
+    "AUDJPY=X", "AUDNZD=X", "AUDUSD=X", "CADCHF=X", "CADJPY=X", "CHFJPY=X", 
+    "EURAUD=X", "EURCAD=X", "EURCHF=X", "EURCZK=X", "EURDKK=X", "EURGBP=X", 
+    "EURHUF=X", "EURJPY=X", "EURNOK=X", "EURNZD=X", "EURPLN=X", "EURTRY=X", 
+    "EURUSD=X", "GBPAUD=X", "GBPCAD=X", "GBPCHF=X", "GBPJPY=X", "GBPNZD=X", 
+    "GBPUSD=X", "NZDCAD=X", "NZDCHF=X", "NZDJPY=X", "NZDUSD=X", "SGDJPY=X", 
+    "TRYJPY=X", "USDCAD=X", "USDCHF=X", "USDCNH=X", "USDCZK=X", "USDDKK=X", 
+    "USDHKD=X", "USDHUF=X", "USDJPY=X", "USDMXN=X", "USDNOK=X", "USDPLN=X", 
+    "USDSEK=X", "USDSGD=X", "USDTRY=X", "USDZAR=X", "ZARJPY=X", "ADA-USD", 
+    "AVAX-USD", "BCH-USD", "BNB-USD", "BTC-USD", "DOGE-USD", "DOT-USD", "EOS-USD", 
+    "ETH-USD", "GLMR-USD", "KSM-USD", "LINK-USD", "LTC-USD", "MATIC-USD", 
+    "SOL-USD", "XLM-USD", "XTZ-USD", "^AXJO", "^SSMI", "^HSCE", "^FTXIN9", 
+    "^GDAXI", "^IBEX", "^STOXX50E", "^FCHI", "^HSI", "^N225", "^AEX", "^STI", 
+    "^FTSE", "^NDX", "^RUT", "^DJI", "^GSPC", "HG=F", "NG=F", "ZS=F", "SB=F", 
+    "BZ=F", "CL=F", "ZW=F", "AAPL", "AMZN", "BABA", "DIS", "F", "GE", "GOOGL", "META"
+]
