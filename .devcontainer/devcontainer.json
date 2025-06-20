@@ -1,0 +1,82 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "Python 3",
+	// O usa un Dockerfile o un archivo Docker Compose. Más información: https://containers.dev/guide/dockerfile
+	// Si usas una imagen base como esta, necesitarás instalar black y pylint dentro del contenedor.
+	// Una opción es usar un postCreateCommand, o si necesitas personalización más profunda,
+	// cambiar a un "build" con un Dockerfile propio.
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.9-bullseye",
+	"features": {
+		// Core utilities for a better terminal experience
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		// For handling large files in Git (e.g., datasets, ML models)
+		"ghcr.io/devcontainers/features/git-lfs:1": {}
+		// Si necesitas otras herramientas a nivel de sistema operativo, podrías agregarlas aquí.
+	},
+	// Comandos a ejecutar después de que el contenedor es creado.
+	// Aquí es donde instalas las dependencias de tu proyecto Y las herramientas de linting/formato.
+	"postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt && pip install black pylint && echo '.vscode/' >> .gitignore",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.black-formatter",
+				"ms-python.pylint",
+				"ms-toolsai.jupyter",
+				"ms-toolsai.jupyter-keymap",
+				"ms-toolsai.jupyter-renderers",
+				"ms-toolsai.vscode-jupyter-cell-tags",
+				"ms-toolsai.vscode-jupyter-slideshow",
+				"ms-toolsai.datawrangler",
+				"github.vscode-github-actions",
+				"DavidAnson.vscode-markdownlint",
+				"mechatroner.rainbow-csv",
+				"oderwat.indent-rainbow",
+				"KevinRose.vsc-python-indent",
+				"njpwerner.autodocstring",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"eamodio.gitlens"
+			],
+			"settings": {
+				"notebook.lineNumbers": "on",
+				"editor.formatOnSave": true, // Habilitar formateo al guardar
+				"editor.rulers": [
+					88 // Muestra una regla visual en la columna 88
+				],
+				// --- Configuración de Pylint ---
+				"pylint.lintOnChange": false, // Ejecutar Pylint al cambiar el código
+				"pylint.enabled": true,
+				"pylint.args": [
+					"--max-line-length=88",
+					"--extension-pkg-whitelist=numpy,pandas"
+				],
+				// --- Configuración de Black ---
+				"python.formatting.provider": "black", // Establece Black como el proveedor de formato
+				"black-formatter.args": [
+					"--line-length=88" // Argumento para Black: longitud de línea 88
+				]
+				// Configuración de Copilot (si la usas, asegúrate de que la extensión "github.copilot" esté arriba)
+				// "github.copilot.enable": {
+				//     "*": true,
+				//     "plaintext": false,
+				//     "markdown": false,
+				//     "scminput": false
+				// },
+				// "github.copilot.editor.enableAutoCompletions": true,
+				// Configuración de GitLens (si la usas, asegúrate de que la extensión "eamodio.gitlens" esté arriba)
+				// "gitlens.ai.model": "vscode",
+				// "gitlens.ai.vscode.model": "copilot:gpt-4o-mini",
+				// Otras configuraciones que tenías y son específicas de VS Code
+				// "docify.commentService.autoTranslationService": "Spanish",
+				// "docify.commentService.docstringFormat": "Google",
+				// "docify.commentService.sidePanelReviewMode": true,
+				// "dataWrangler.outputRenderer.pagination.defaultSize": 25
+				// Comentado: "python.defaultInterpreterPath": "/usr/local/bin/python"
+				// Esta línea no es necesaria en un devcontainer, el intérprete ya está en la imagen.
+			}
+		}
+	},
+	// Default user for the container. 'vscode' is usually recommended for non-root access.
+	"remoteUser": "vscode"
+}
